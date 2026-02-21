@@ -2,7 +2,7 @@
 set -e
 
 BASE_URL="https://files.inectar.cn"
-JSON_URL="$BASE_URL/d/ftp/easybot/latest.json"
+JSON_URL="$BASE_URL/d/ftp/easybot/dev/latest.json"
 
 json_data=$(curl -sSLf --retry 3 --retry-delay 2 "$JSON_URL") || {
     echo "❌ 无法获取版本信息" >&2
