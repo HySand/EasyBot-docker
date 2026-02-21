@@ -31,13 +31,18 @@ jobs:
         run: |
           latest_url=${{ steps.get_url.outputs.latest_url }}
           echo "Latest URL: $latest_url"
-          version=$(basename "$latest_url" | sed -n 's/.*easybot-[^-]*-x64-\([0-9]\+\.[0-9]\+\.[0-9]\+-[0-9a-z]\+\)\..*/\1/p')
+
+          filename=$(basename "$latest_url")
+          version=${filename##*-x64-}
+          version=${version%.zip}
+
           if [ -z "$version" ]; then
             echo "Error: Failed to extract version from URL."
             exit 1
           fi
+
           echo "Extracted version: $version"
-          echo "::set-output name=version::$version"
+          echo "version=$version" >> $GITHUB_OUTPUT
 
       - name: Compare hash with version file
         id: compare_hash
